@@ -15,11 +15,15 @@ const Select = ({
 }) => {
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
+
+  // Filtre les evenements en fonction du type
   const changeValue = (newValue) => {
-    onChange();
+    onChange(newValue);
     setValue(newValue);
-    setCollapsed(newValue);
+    setCollapsed(true);
   };
+
+  
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}
