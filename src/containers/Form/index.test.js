@@ -18,11 +18,12 @@ describe("When the Form component is rendered", () => {
       const button = await screen.findByTestId("button-test-id");
       fireEvent.click(button);
 
-      // Wait for the button text to change to "En cours"
+      // Attendre que le texte du bouton change en "En cours"
       await waitFor(() => expect(screen.getByText("En cours")).toBeInTheDocument());
 
-      // Now the button text should automatically return to "Envoyer"
+      // Le texte du bouton devrait à présent revenir automatiquement à "Envoyer"
       await waitFor(() => expect(screen.getByText("Envoyer")).toBeInTheDocument(), {timeout: 4000});
+
 
       expect(onSuccess).toHaveBeenCalled();
     });
