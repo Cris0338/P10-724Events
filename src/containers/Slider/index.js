@@ -13,7 +13,7 @@ const Slider = () => {
   // Trier les données en fonction de la date et vérifier la disponibilité
   useEffect(() => {
     if (data?.focus && data.focus.length > 0) {
-      const sortedFocusEvents = [...data.focus].sort((a, b) => new Date(a.date) - new Date(b.date));
+      const sortedFocusEvents = [...data.focus].sort((b, a) => new Date(a.date) - new Date(b.date));
       setSortedData(sortedFocusEvents);
       setIsDataLoaded(true);
     }
