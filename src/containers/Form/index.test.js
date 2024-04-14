@@ -1,8 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Form from "./index";
 
-describe("When Events is created", () => {
-  it("a list of event card is displayed", async () => {
+describe("When the Form component is rendered", () => {
+  it("displays a list of form fields", async () => {
     render(<Form />);
     await screen.findByText("Email");
     await screen.findByText("Nom");
@@ -11,18 +11,19 @@ describe("When Events is created", () => {
   });
 
   describe("and a click is triggered on the submit button", () => {
-    it("the success action is called", async () => {
+    it("calls the success action", async () => {
       const onSuccess = jest.fn();
       render(<Form onSuccess={onSuccess} />);
-      fireEvent(
-        await screen.findByTestId("button-test-id"),
-        new MouseEvent("click", {
-          cancelable: true,
-          bubbles: true,
-        })
-      );
-      await screen.findByText("En cours");
-      await screen.findByText("Envoyer");
+
+      const button = await screen.findByTestId("button-test-id");
+      fireEvent.click(button);
+
+      // Wait for the button text to change to "En cours"
+      await waitFor(() => expect(screen.getByText("En cours")).toBeInTheDocument());
+
+      // Now the button text should automatically return to "Envoyer"
+      await waitFor(() => expect(screen.getByText("Envoyer")).toBeInTheDocument(), {timeout: 4000});
+
       expect(onSuccess).toHaveBeenCalled();
     });
   });
