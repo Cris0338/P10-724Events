@@ -14,16 +14,17 @@ const EventList = () => {
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Filtre les evenements en fonction du type
-  const filteredEvents = data?.events.filter(event => 
-    !type || event.type === type // Filtro per tipo
-  ).slice(
-    (currentPage - 1) * PER_PAGE, // Indice di inizio per la paginazione
-    currentPage * PER_PAGE // Indice di fine per la paginazione
-  );
-  
+  // Déclare events en array
+  const events = data?.events || [];
 
-  // Changement de page
+  // Filtre les evenements en fonction du type
+  const filteredEvents = events.filter(event => 
+    !type || event.type === type
+  ).slice(
+    (currentPage - 1) * PER_PAGE,
+    currentPage * PER_PAGE
+  );
+// Changement de page
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
@@ -31,14 +32,13 @@ const EventList = () => {
 
   // Pagination
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
-  const typeList = new Set(data?.events.map((event) => event.type));
-
+  const typeList = new Set(events.map((event) => event.type));
 
   return (
     <>
-      {error && <div>An error occured</div>}
-      {data === null ? (
-        "loading"
+      {error && <div>An error occurred</div>}
+      {!data ? (
+        <div>Loading...</div>
       ) : (
         <>
           <h3 className="SelectTitle">Catégories</h3>
