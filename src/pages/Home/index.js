@@ -13,8 +13,7 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {data} = useData()
-  const last = data?.events.sort((b, a) => new Date(a.date) - new Date(b.date))[0];
+  const {last} = useData(); // Utilisation de 'last' depuis le contexte
   return <>
     <header>
       <Menu />
